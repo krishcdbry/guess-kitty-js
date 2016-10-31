@@ -15,10 +15,19 @@ body {
 
 .score {
 	display: none;
+	position: fixed;
+	top: 42%;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.score > p{
+	font-size: 35px;
+	font-weight: bold;
+	color: limegreen;
 }
 
 .Winner-anim {
-	margin-top: -311px;
 	display: block;
 }
 
@@ -48,7 +57,7 @@ body {
 
 .board.won {
 	pointer-events: none;
-	opacity: 0.3;
+	opacity: 0.1;
 }
 
 .block {
@@ -61,7 +70,7 @@ body {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background: #fbeed5;
+	background: ghostwhite;
 	cursor: pointer;
 }
 
@@ -134,5 +143,9 @@ a.noDecoration {
 	.scores {
 		position: inherit;
 		border: 0px solid #f0f0f0;
+	}
+
+	.score {
+		top: 27%;
 	}
 }

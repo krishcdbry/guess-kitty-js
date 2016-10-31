@@ -40,6 +40,20 @@
 			}
 		}
 
+		getScoreUpdate() {
+			var length = this.state.scores.length;
+			var scores = this.state.scores;
+			if (length > 0) {
+				this.totalScore = scores.reduce(function(next, prev) {
+					return next + prev;
+				});
+
+				this.avgScore = this.totalScore / length;
+				this.minScore = scores.sort()[0];
+				this.maxScore = scores.sort()[length - 1];
+			}
+		}
+
 		handleClick(index) {
 			var blocks =  this.state.blocks;
 			var scores = this.state.scores;
@@ -56,7 +70,9 @@
 					, win: (index === this.state.KITTY_INDEX)
 					, currentScore : currentScore
 					, scores: scores
-				})
+				});
+
+				this.getScoreUpdate();
 			}
 
 		}
@@ -89,8 +105,8 @@
 							{this.state.blocks.map((block, index) => {
 								return  (block === 'VISITED')
 									? (index === this.state.KITTY_INDEX)
-									? <div onClick={() => this.handleClick(index)} className="block success">KITTY</div>
-									: <div onClick={() => this.handleClick(index)} className="block failed">X</div>
+									? <div onClick={() => this.handleClick(index)} className="block success"><i className="fa fa-smile-o"></i></div>
+									: <div onClick={() => this.handleClick(index)} className="block failed"><i className="fa fa-frown-o"></i></div>
 									: <div onClick={() => this.handleClick(index)} className="block"><span className="fa fa-lock"></span></div>;
 							})}
 						</div>
@@ -103,9 +119,14 @@
 								return <p><b>{index+1}.</b> {score}</p>
 							})}
 							</div>
+							<b>Total</b> : {this.totalScore} <br></br>
+							<b>Avg</b> : {this.avgScore} <br></br>
+							<b>Min</b>  : {this.minScore} <br></br>
+							<b>Max</b> : {this.maxScore} <br></br>
 						</div>
 					</center>
 					<div className={"score " + (this.state.win ? "Winner-anim": "")}>
+						<p>Kitty Found</p>
 						<h3> SCORE = {this.state.currentScore} </h3>
 						<br></br>
 						<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
