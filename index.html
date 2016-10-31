@@ -36,6 +36,16 @@
 		constructor(props) {
 			super(props)
 
+			var scores = [];
+
+			if (localStorage.getItem('scores')) {
+				scores = localStorage.getItem('scores').split(',');
+				scores = scores.map(function(item) {
+					return parseInt(item, 10);
+				});
+				this.calculateScoreSummary(scores);
+			}
+
 			this.state = {
 				NUMBER_OF_BLOCKS: 25
 				, blocks: []
@@ -43,7 +53,7 @@
 				, win : false
 				, attempts: 0
 				, currentScore: 0
-				, scores : []
+				, scores : scores
 				, startGame: false
 			};
 
@@ -53,18 +63,22 @@
 			}
 		}
 
-		getScoreUpdate() {
-			var length = this.state.scores.length;
-			var scores = this.state.scores;
-			if (length > 0) {
-				this.totalScore = scores.reduce(function(next, prev) {
-					return next + prev;
-				});
-
-				this.avgScore = Math.round(this.totalScore / length);
-				this.minScore = scores.reduce(function(a,b) { return (a < b) ? a : b });
-				this.maxScore = scores.reduce(function(a,b) { return (a > b) ? a : b });
+		calculateScoreSummary(scores) {
+			if (scores.length < 1) {
+				return;
 			}
+			this.totalScore = scores.reduce(function(next, prev) {
+				return Number(next) + Number(prev);
+			});
+
+			this.avgScore = Math.round(this.totalScore / scores.length);
+			this.minScore = scores.reduce(function(a,b) { return (a < b) ? a : b });
+			this.maxScore = scores.reduce(function(a,b) { return (a > b) ? a : b });
+		}
+
+		getScoreUpdate() {
+			var scores = this.state.scores;
+			this.calculateScoreSummary(scores);
 		}
 
 		handleClick(index) {
@@ -85,6 +99,7 @@
 					, scores: scores
 				});
 
+				localStorage.setItem('scores', scores);
 				this.getScoreUpdate();
 			}
 
@@ -105,6 +120,15 @@
 			}
 
 			this.setState(state);
+		}
+
+		clearScores() {
+			this.setState({
+				scores: []
+			});
+
+			localStorage.clear();
+			this.getScoreUpdate();
 		}
 
 		startGame() {
@@ -157,9 +181,12 @@
 									<b>Worst</b> : {this.minScore}
 								</div>
 							</div>
+							<p>
+								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">Clear scores <i className="fa fa-trash"></i></a>
+							</p>
 						</div>
 					</center>
-					<div className={this.state.startGame ? "wrapper hide-me" : "wrapper"}>
+					<div className={this.state.startGame || this.state.scores.length > 0 ? "wrapper hide-me" : "wrapper"}>
 						<div className="wrapper-content">
 							<center>
 								<br/><br/>

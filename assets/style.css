@@ -193,6 +193,12 @@ a.noDecoration {
 	vertical-align: middle;
 }
 
+.clear-scores {
+	color: #880000;
+	font-size: 13px;
+	text-decoration: none;
+}
+
 .hide-me {
 	display: none;
 }
