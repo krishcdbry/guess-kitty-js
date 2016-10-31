@@ -13,10 +13,14 @@ body {
 	height: 80px;
 }
 
+.game-area {
+	position: relative;
+}
+
 .score {
 	display: none;
 	position: absolute;
-	top: 42%;
+	top: 23%;
 	left: 50%;
 	transform: translateX(-50%);
 	z-index: 99999;
@@ -147,6 +151,6 @@ a.noDecoration {
 	}
 
 	.score {
-		top: 27%;
+		top: 4%;
 	}
 }

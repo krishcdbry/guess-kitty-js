@@ -101,14 +101,22 @@
 						<h1>Guess Kitty - ReactJs</h1>
 					</div>
 					<center>
-						<div className={"board " + (this.state.win ? "board won": "")}>
-							{this.state.blocks.map((block, index) => {
-								return  (block === 'VISITED')
-									? (index === this.state.KITTY_INDEX)
-									? <div onClick={() => this.handleClick(index)} className="block success"><i className="fa fa-smile-o"></i></div>
-									: <div onClick={() => this.handleClick(index)} className="block failed"><i className="fa fa-frown-o"></i></div>
-									: <div onClick={() => this.handleClick(index)} className="block"><span className="fa fa-lock"></span></div>;
-							})}
+						<div className="game-area">
+							<div className={"board " + (this.state.win ? "board won": "")}>
+								{this.state.blocks.map((block, index) => {
+									return  (block === 'VISITED')
+										? (index === this.state.KITTY_INDEX)
+										? <div onClick={() => this.handleClick(index)} className="block success"><i className="fa fa-smile-o"></i></div>
+										: <div onClick={() => this.handleClick(index)} className="block failed"><i className="fa fa-frown-o"></i></div>
+										: <div onClick={() => this.handleClick(index)} className="block"><span className="fa fa-lock"></span></div>;
+								})}
+							</div>
+							<div className={"score " + (this.state.win ? "Winner-anim": "")}>
+								<p>Kitty Found</p>
+								<h3> SCORE = {this.state.currentScore} </h3>
+								<br></br>
+								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
+							</div>
 						</div>
 						<h3> ATTEMPTS = {this.state.attempts}/25 </h3>
 						<div className={this.state.scores.length > 0 ? "scores": "scores hide-me"}>
@@ -125,12 +133,6 @@
 							<b>Max</b> : {this.maxScore} <br></br>
 						</div>
 					</center>
-					<div className={"score " + (this.state.win ? "Winner-anim": "")}>
-						<p>Kitty Found</p>
-						<h3> SCORE = {this.state.currentScore} </h3>
-						<br></br>
-						<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
-					</div>
 				</div>
 			);
 		}
