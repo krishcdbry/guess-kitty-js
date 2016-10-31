@@ -48,9 +48,9 @@
 					return next + prev;
 				});
 
-				this.avgScore = this.totalScore / length;
-				this.minScore = scores.sort()[0];
-				this.maxScore = scores.sort()[length - 1];
+				this.avgScore = Math.round(this.totalScore / length);
+				this.minScore = Math.round(scores.sort()[0]);
+				this.maxScore = Math.round(scores.sort()[length - 1]);
 			}
 		}
 
