@@ -64,32 +64,32 @@
 		}
 
 		createConfetti() {
-			const colors = ['#000000', '#171717', '#262626', '#404040'];
-			const confettiCount = 30;
+			const colors = ['#000000', '#171717', '#404040'];
+			const confettiCount = 24;
 
 			for (let i = 0; i < confettiCount; i++) {
 				const confetti = document.createElement('div');
 				confetti.style.position = 'fixed';
-				confetti.style.width = '4px';
-				confetti.style.height = '4px';
+				confetti.style.width = '2px';
+				confetti.style.height = '2px';
 				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 				confetti.style.left = Math.random() * 100 + '%';
 				confetti.style.top = '-10px';
-				confetti.style.opacity = Math.random() * 0.8 + 0.2;
+				confetti.style.opacity = Math.random() * 0.4 + 0.1;
 				confetti.style.zIndex = '999999';
 				confetti.style.pointerEvents = 'none';
 
 				document.body.appendChild(confetti);
 
-				const duration = Math.random() * 2 + 1.5;
-				const rotation = Math.random() * 180;
+				const duration = Math.random() * 2 + 1.8;
+				const rotation = Math.random() * 90;
 
 				confetti.animate([
-					{ transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+					{ transform: 'translateY(0) rotate(0deg)', opacity: 0.5 },
 					{ transform: `translateY(${window.innerHeight + 20}px) rotate(${rotation}deg)`, opacity: 0 }
 				], {
 					duration: duration * 1000,
-					easing: 'linear'
+					easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
 				});
 
 				setTimeout(() => {
@@ -189,36 +189,36 @@
 								})}
 							</div>
 							<div className={"score " + (this.state.win ? "Winner-anim": "")}>
-								<p>COMPLETE</p>
+								<p>Score</p>
 								<h3>{this.state.currentScore}</h3>
 								<br></br>
-								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
+								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration"><span>Play Again</span></a>
 							</div>
 						</div>
 						<h3>{this.state.attempts} / 25</h3>
 						<div className={this.state.scores.length > 0 ? "scores": "scores hide-me"}>
-							<h3>DATA</h3>
+							<h3>Performance</h3>
 							<div className="score-list">
 								{this.state.scores.map((score, index) => {
-									return <p><b>[{String(index+1).padStart(2, '0')}]</b> {score}</p>
+									return <p><b>{String(index+1).padStart(2, '0')}</b> <span>{score}</span></p>
 								})}
 							</div>
 							<div className="score-summary">
 								<div className="score-summary-block">
-									SUM: {this.totalScore}
+									Sum <span>{this.totalScore}</span>
 								</div>
 								<div className="score-summary-block">
-									AVG: {this.avgScore}
+									Avg <span>{this.avgScore}</span>
 								</div>
 								<div className="score-summary-block">
-									MAX: {this.maxScore}
+									Max <span>{this.maxScore}</span>
 								</div>
 								<div className="score-summary-block">
-									MIN: {this.minScore}
+									Min <span>{this.minScore}</span>
 								</div>
 							</div>
 							<p>
-								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">CLEAR</a>
+								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">Reset</a>
 							</p>
 						</div>
 					</center>
@@ -226,10 +226,10 @@
 						<div className="wrapper-content">
 							<center>
 								<div className="wrapper-title">
-									GUESS<br/>KITTY
+									Guess Kitty
 								</div>
-								<p style={{color: '#525252', fontSize: '16px', maxWidth: '600px', margin: '0 auto 64px', lineHeight: '1.8', fontWeight: '400', letterSpacing: '0.5px', fontFamily: 'monospace'}}>
-									A MINIMALIST GRID-BASED PUZZLE // LOCATE THE TARGET // OPTIMIZE YOUR STRATEGY // MAXIMIZE EFFICIENCY
+								<p>
+									A minimalist puzzle game where intuition meets strategy. Find the hidden element within the grid while minimizing your attempts to maximize your score.
 								</p>
 								<div className="intro-data" onClick={() => this.startGame()} >
 									<img src="assets/img/guess-kitty-one.png" className="screenshots" alt="Interface"/>
@@ -237,7 +237,7 @@
 									<img src="assets/img/guess-kitty-three.png" className="screenshots" alt="Result"/>
 								</div>
 								<a href="javascript:;" onClick={() => this.startGame()} className="start-game">
-									<span>BEGIN</span> <i className="fa fa-arrow-right start-button"></i>
+									<span>Start Game</span> <i className="fa fa-arrow-right start-button"></i>
 								</a>
 							</center>
 						</div>
