@@ -24,7 +24,7 @@
 			return (
 				<center>
 					<div className="App-header">
-						<h1>Guess Kitty - ReactJs</h1>
+						<h1><span role="img" aria-label="cat">😺</span> Guess Kitty</h1>
 					</div>
 				</center>
 			)
@@ -63,6 +63,42 @@
 			}
 		}
 
+		createConfetti() {
+			const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#fa709a', '#fee140'];
+			const confettiCount = 50;
+
+			for (let i = 0; i < confettiCount; i++) {
+				const confetti = document.createElement('div');
+				confetti.style.position = 'fixed';
+				confetti.style.width = Math.random() * 10 + 5 + 'px';
+				confetti.style.height = confetti.style.width;
+				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+				confetti.style.left = Math.random() * 100 + '%';
+				confetti.style.top = '-10px';
+				confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+				confetti.style.opacity = Math.random();
+				confetti.style.zIndex = '999999';
+				confetti.style.pointerEvents = 'none';
+
+				document.body.appendChild(confetti);
+
+				const duration = Math.random() * 3 + 2;
+				const rotation = Math.random() * 360;
+
+				confetti.animate([
+					{ transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+					{ transform: `translateY(${window.innerHeight + 20}px) rotate(${rotation}deg)`, opacity: 0 }
+				], {
+					duration: duration * 1000,
+					easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+				});
+
+				setTimeout(() => {
+					confetti.remove();
+				}, duration * 1000);
+			}
+		}
+
 		calculateScoreSummary(scores) {
 			if (scores.length < 1) {
 				return;
@@ -89,6 +125,8 @@
 				if (index === this.state.KITTY_INDEX) {
 					var currentScore = (25-this.state.attempts)*100;
 					scores.push(currentScore);
+					// Trigger confetti on win!
+					setTimeout(() => this.createConfetti(), 300);
 				}
 				this.state.attempts++;
 				this.setState({
@@ -190,17 +228,21 @@
 						<div className="wrapper-content">
 							<center>
 								<br/><br/>
-								<span className="wrapper-title">
-									Guess Kitty
-								</span>
-								<br/><br/><br/>
-								<div className="intro-data" onClick={() => this.startGame()} >
-									<img src="assets/img/guess-kitty-one.png" className="screenshots"/>
-									<img src="assets/img/guess-kitty-two.png" className="screenshots"/>
-									<img src="assets/img/guess-kitty-three.png" className="screenshots"/>
+								<div className="wrapper-title">
+									<span role="img" aria-label="cat">😺</span> Guess Kitty
 								</div>
-								<br/><br/><br/><br/>
-								<a href="javascript:;" onClick={() => this.startGame()} className="start-game"><span>Start</span> <i className="fa fa-play-circle-o start-button"></i></a>
+								<p style={{color: 'white', fontSize: '20px', maxWidth: '600px', margin: '0 auto 40px', lineHeight: '1.6'}}>
+									Find the hidden kitty in the grid! The faster you find it, the higher your score!
+								</p>
+								<div className="intro-data" onClick={() => this.startGame()} >
+									<img src="assets/img/guess-kitty-one.png" className="screenshots" alt="Game Screenshot 1"/>
+									<img src="assets/img/guess-kitty-two.png" className="screenshots" alt="Game Screenshot 2"/>
+									<img src="assets/img/guess-kitty-three.png" className="screenshots" alt="Game Screenshot 3"/>
+								</div>
+								<br/><br/>
+								<a href="javascript:;" onClick={() => this.startGame()} className="start-game">
+									<span>Start Playing</span> <i className="fa fa-play-circle start-button"></i>
+								</a>
 								<br/><br/><br/><br/>
 							</center>
 						</div>
