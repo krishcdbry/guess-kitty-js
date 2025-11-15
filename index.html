@@ -26,7 +26,7 @@
 			return (
 				<center>
 					<div className="App-header">
-						<h1>🐱 Guess Kitty</h1>
+						<h1>Guess Kitty</h1>
 					</div>
 				</center>
 			)
@@ -65,6 +65,41 @@
 			}
 		}
 
+		createConfetti() {
+			const colors = ['#000000', '#171717', '#262626', '#404040'];
+			const confettiCount = 30;
+
+			for (let i = 0; i < confettiCount; i++) {
+				const confetti = document.createElement('div');
+				confetti.style.position = 'fixed';
+				confetti.style.width = '4px';
+				confetti.style.height = '4px';
+				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+				confetti.style.left = Math.random() * 100 + '%';
+				confetti.style.top = '-10px';
+				confetti.style.opacity = Math.random() * 0.8 + 0.2;
+				confetti.style.zIndex = '999999';
+				confetti.style.pointerEvents = 'none';
+
+				document.body.appendChild(confetti);
+
+				const duration = Math.random() * 2 + 1.5;
+				const rotation = Math.random() * 180;
+
+				confetti.animate([
+					{ transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+					{ transform: `translateY(${window.innerHeight + 20}px) rotate(${rotation}deg)`, opacity: 0 }
+				], {
+					duration: duration * 1000,
+					easing: 'linear'
+				});
+
+				setTimeout(() => {
+					confetti.remove();
+				}, duration * 1000);
+			}
+		}
+
 		calculateScoreSummary(scores) {
 			if (scores.length < 1) {
 				return;
@@ -91,6 +126,8 @@
 				if (index === this.state.KITTY_INDEX) {
 					var currentScore = (25-this.state.attempts)*100;
 					scores.push(currentScore);
+					// Trigger confetti on win!
+					setTimeout(() => this.createConfetti(), 300);
 				}
 				this.state.attempts++;
 				this.setState({
@@ -154,56 +191,56 @@
 								})}
 							</div>
 							<div className={"score " + (this.state.win ? "Winner-anim": "")}>
-								<p>Kitty Found</p>
-								<h3> SCORE = {this.state.currentScore} </h3>
+								<p>COMPLETE</p>
+								<h3>{this.state.currentScore}</h3>
 								<br></br>
 								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
 							</div>
 						</div>
-						<h3> ATTEMPTS = {this.state.attempts}/25 </h3>
+						<h3>{this.state.attempts} / 25</h3>
 						<div className={this.state.scores.length > 0 ? "scores": "scores hide-me"}>
-							<h3>Scores</h3>
+							<h3>DATA</h3>
 							<div className="score-list">
-								<hr></hr>
 								{this.state.scores.map((score, index) => {
-									return <p><b>{index+1}.</b> {score}</p>
+									return <p><b>[{String(index+1).padStart(2, '0')}]</b> {score}</p>
 								})}
 							</div>
 							<div className="score-summary">
 								<div className="score-summary-block">
-									<b>Total</b> : {this.totalScore}
+									SUM: {this.totalScore}
 								</div>
 								<div className="score-summary-block">
-									<b>Avg</b> :  {this.avgScore}
+									AVG: {this.avgScore}
 								</div>
 								<div className="score-summary-block">
-									<b>Best</b> : {this.maxScore}
+									MAX: {this.maxScore}
 								</div>
 								<div className="score-summary-block">
-									<b>Worst</b> : {this.minScore}
+									MIN: {this.minScore}
 								</div>
 							</div>
 							<p>
-								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">Clear scores <i className="fa fa-trash"></i></a>
+								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">CLEAR</a>
 							</p>
 						</div>
 					</center>
 					<div className={this.state.startGame || this.state.scores.length > 0 ? "wrapper hide-me" : "wrapper"}>
 						<div className="wrapper-content">
 							<center>
-								<br/><br/>
-								<span className="wrapper-title">
-									Guess Kitty
-								</span>
-								<br/><br/><br/>
-								<div className="intro-data" onClick={() => this.startGame()} >
-									<img src="assets/img/guess-kitty-one.png" className="screenshots"/>
-									<img src="assets/img/guess-kitty-two.png" className="screenshots"/>
-									<img src="assets/img/guess-kitty-three.png" className="screenshots"/>
+								<div className="wrapper-title">
+									GUESS<br/>KITTY
 								</div>
-								<br/><br/><br/><br/>
-								<a href="javascript:;" onClick={() => this.startGame()} className="start-game"><span>Start</span> <i className="fa fa-play-circle-o start-button"></i></a>
-								<br/><br/><br/><br/>
+								<p style={{color: '#525252', fontSize: '16px', maxWidth: '600px', margin: '0 auto 64px', lineHeight: '1.8', fontWeight: '400', letterSpacing: '0.5px', fontFamily: 'monospace'}}>
+									A MINIMALIST GRID-BASED PUZZLE // LOCATE THE TARGET // OPTIMIZE YOUR STRATEGY // MAXIMIZE EFFICIENCY
+								</p>
+								<div className="intro-data" onClick={() => this.startGame()} >
+									<img src="assets/img/guess-kitty-one.png" className="screenshots" alt="Interface"/>
+									<img src="assets/img/guess-kitty-two.png" className="screenshots" alt="Progress"/>
+									<img src="assets/img/guess-kitty-three.png" className="screenshots" alt="Result"/>
+								</div>
+								<a href="javascript:;" onClick={() => this.startGame()} className="start-game">
+									<span>BEGIN</span> <i className="fa fa-arrow-right start-button"></i>
+								</a>
 							</center>
 						</div>
 					</div>
