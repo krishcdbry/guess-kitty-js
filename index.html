@@ -64,35 +64,32 @@
 		}
 
 		createConfetti() {
-			const colors = ['#f59e0b', '#fbbf24', '#3b82f6', '#06b6d4'];
-			const confettiCount = 40;
+			const colors = ['#000000', '#171717', '#262626', '#404040'];
+			const confettiCount = 30;
 
 			for (let i = 0; i < confettiCount; i++) {
 				const confetti = document.createElement('div');
 				confetti.style.position = 'fixed';
-				confetti.style.width = Math.random() * 8 + 4 + 'px';
-				confetti.style.height = confetti.style.width;
+				confetti.style.width = '4px';
+				confetti.style.height = '4px';
 				confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 				confetti.style.left = Math.random() * 100 + '%';
 				confetti.style.top = '-10px';
-				confetti.style.borderRadius = '2px';
-				confetti.style.opacity = Math.random() * 0.6 + 0.4;
+				confetti.style.opacity = Math.random() * 0.8 + 0.2;
 				confetti.style.zIndex = '999999';
 				confetti.style.pointerEvents = 'none';
-				confetti.style.boxShadow = '0 0 10px rgba(245, 158, 11, 0.5)';
 
 				document.body.appendChild(confetti);
 
-				const duration = Math.random() * 2.5 + 2;
-				const rotation = Math.random() * 360;
-				const drift = (Math.random() - 0.5) * 100;
+				const duration = Math.random() * 2 + 1.5;
+				const rotation = Math.random() * 180;
 
 				confetti.animate([
-					{ transform: 'translateY(0) translateX(0) rotate(0deg)', opacity: 0.8 },
-					{ transform: `translateY(${window.innerHeight + 20}px) translateX(${drift}px) rotate(${rotation}deg)`, opacity: 0 }
+					{ transform: 'translateY(0) rotate(0deg)', opacity: 0.8 },
+					{ transform: `translateY(${window.innerHeight + 20}px) rotate(${rotation}deg)`, opacity: 0 }
 				], {
 					duration: duration * 1000,
-					easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+					easing: 'linear'
 				});
 
 				setTimeout(() => {
@@ -192,36 +189,36 @@
 								})}
 							</div>
 							<div className={"score " + (this.state.win ? "Winner-anim": "")}>
-								<p>Victory</p>
+								<p>COMPLETE</p>
 								<h3>{this.state.currentScore}</h3>
 								<br></br>
-								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">New Game</a>
+								<a href="javascript:;" onClick={() => this.handleClickRestart()} className="noDecoration">RESTART</a>
 							</div>
 						</div>
-						<h3>Attempts: {this.state.attempts}/25</h3>
+						<h3>{this.state.attempts} / 25</h3>
 						<div className={this.state.scores.length > 0 ? "scores": "scores hide-me"}>
-							<h3>Statistics</h3>
+							<h3>DATA</h3>
 							<div className="score-list">
 								{this.state.scores.map((score, index) => {
-									return <p><b>#{index+1}</b> {score}</p>
+									return <p><b>[{String(index+1).padStart(2, '0')}]</b> {score}</p>
 								})}
 							</div>
 							<div className="score-summary">
 								<div className="score-summary-block">
-									Total: {this.totalScore}
+									SUM: {this.totalScore}
 								</div>
 								<div className="score-summary-block">
-									Average: {this.avgScore}
+									AVG: {this.avgScore}
 								</div>
 								<div className="score-summary-block">
-									Best: {this.maxScore}
+									MAX: {this.maxScore}
 								</div>
 								<div className="score-summary-block">
-									Worst: {this.minScore}
+									MIN: {this.minScore}
 								</div>
 							</div>
 							<p>
-								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">Reset Stats <i className="fa fa-refresh"></i></a>
+								<a href="javascript:;" onClick={() => this.clearScores()} className="clear-scores">CLEAR</a>
 							</p>
 						</div>
 					</center>
@@ -229,18 +226,18 @@
 						<div className="wrapper-content">
 							<center>
 								<div className="wrapper-title">
-									Guess Kitty
+									GUESS<br/>KITTY
 								</div>
-								<p style={{color: '#9ca3af', fontSize: '22px', maxWidth: '700px', margin: '0 auto 64px', lineHeight: '1.7', fontWeight: '500'}}>
-									Discover the hidden block in a strategic grid puzzle. Master your intuition, minimize attempts, and maximize your score in this elegant challenge.
+								<p style={{color: '#525252', fontSize: '16px', maxWidth: '600px', margin: '0 auto 64px', lineHeight: '1.8', fontWeight: '400', letterSpacing: '0.5px', fontFamily: 'monospace'}}>
+									A MINIMALIST GRID-BASED PUZZLE // LOCATE THE TARGET // OPTIMIZE YOUR STRATEGY // MAXIMIZE EFFICIENCY
 								</p>
 								<div className="intro-data" onClick={() => this.startGame()} >
-									<img src="assets/img/guess-kitty-one.png" className="screenshots" alt="Game Interface"/>
-									<img src="assets/img/guess-kitty-two.png" className="screenshots" alt="Game Progress"/>
-									<img src="assets/img/guess-kitty-three.png" className="screenshots" alt="Game Victory"/>
+									<img src="assets/img/guess-kitty-one.png" className="screenshots" alt="Interface"/>
+									<img src="assets/img/guess-kitty-two.png" className="screenshots" alt="Progress"/>
+									<img src="assets/img/guess-kitty-three.png" className="screenshots" alt="Result"/>
 								</div>
 								<a href="javascript:;" onClick={() => this.startGame()} className="start-game">
-									<span>Start Game</span> <i className="fa fa-play start-button"></i>
+									<span>BEGIN</span> <i className="fa fa-arrow-right start-button"></i>
 								</a>
 							</center>
 						</div>
