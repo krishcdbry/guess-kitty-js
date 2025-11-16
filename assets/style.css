@@ -1,4 +1,4 @@
-/* Windows Phone Metro Design System */
+/* Magical Metro Design - Windows Phone Inspired */
 * {
 	margin: 0;
 	padding: 0;
@@ -9,8 +9,8 @@
 	--metro-black: #000000;
 	--metro-white: #ffffff;
 	--metro-dark: #1a1a1a;
-	--metro-gray: #cccccc;
-	--metro-light-gray: #e6e6e6;
+	--metro-gray: #999999;
+	--metro-light: #f0f0f0;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;600;700&display=swap');
@@ -27,130 +27,194 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* Metro Paper Texture */
+/* Magical Paper Texture */
 body::before {
 	content: '';
 	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	background-image:
-		repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,.02) 1px, rgba(0,0,0,.02) 2px);
+	inset: 0;
+	background:
+		repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.015) 2px, rgba(0,0,0,.015) 4px),
+		repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,.015) 2px, rgba(0,0,0,.015) 4px);
 	pointer-events: none;
 	z-index: 0;
-	opacity: 0.5;
+	animation: paperShift 20s linear infinite;
+}
+
+@keyframes paperShift {
+	0% { transform: translate(0, 0); }
+	100% { transform: translate(4px, 4px); }
 }
 
 .App {
-	text-align: left;
+	text-align: center;
 	position: relative;
 	min-height: 100vh;
 	z-index: 1;
 	padding: 0;
 	background: var(--metro-white);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
-/* Metro Header - Subtle */
+/* Elegant Header */
 .App-header {
-	background: var(--metro-dark);
-	padding: 20px 30px;
-	border-bottom: none;
+	background: var(--metro-black);
+	padding: 24px 40px;
+	width: 100%;
 	position: relative;
+	box-shadow: 0 1px 0 rgba(0,0,0,0.1);
 }
 
 .App-header h1 {
-	font-size: 1.5rem;
+	font-size: 1.75rem;
 	font-weight: 300;
-	letter-spacing: 0.02em;
+	letter-spacing: 0.3em;
 	text-transform: lowercase;
 	color: var(--metro-white);
 	margin: 0;
-	line-height: 1.2;
+	line-height: 1;
+	animation: titleReveal 0.8s ease-out;
 }
 
-/* Metro Game Area */
+@keyframes titleReveal {
+	from { opacity: 0; letter-spacing: 0; }
+	to { opacity: 1; letter-spacing: 0.3em; }
+}
+
+/* Centered Game Area */
 .game-area {
 	position: relative;
-	display: block;
-	margin: 0;
-	padding: 40px 30px;
-	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	margin: 60px auto;
+	padding: 0 30px;
+	max-width: 600px;
+	width: 100%;
+	animation: areaFadeIn 0.6s ease-out;
 }
 
-/* Metro Game Board */
+@keyframes areaFadeIn {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+/* Magical Game Board */
 .board {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	gap: 0;
 	width: 100%;
-	max-width: 450px;
+	max-width: 500px;
 	aspect-ratio: 1;
 	padding: 0;
-	background: transparent;
-	border: none;
-	margin: 0 0 30px 0;
+	background: var(--metro-black);
+	border: 4px solid var(--metro-black);
+	margin: 0 auto 40px;
 	position: relative;
+	box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.board::before {
+	content: '';
+	position: absolute;
+	inset: -8px;
+	background: linear-gradient(45deg, transparent 30%, rgba(0,0,0,0.05) 50%, transparent 70%);
+	background-size: 200% 200%;
+	animation: shimmer 3s linear infinite;
+	pointer-events: none;
+	z-index: -1;
+}
+
+@keyframes shimmer {
+	0% { background-position: 200% 0; }
+	100% { background-position: -200% 0; }
 }
 
 .board.won {
 	pointer-events: none;
 	opacity: 0.3;
+	transform: scale(0.98);
+	filter: blur(2px);
 }
 
-/* Metro Flat Blocks */
+/* Stunning Block Design */
 .block {
 	width: 100%;
 	height: 100%;
 	color: var(--metro-white);
 	background: var(--metro-black);
-	border: 3px solid var(--metro-white);
+	border: 2px solid var(--metro-white);
 	font-size: 2.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
-	transition: all 0.2s ease;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
 	font-weight: 300;
 }
 
+.block::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: radial-gradient(circle at center, rgba(255,255,255,0.1), transparent);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+}
+
+.block:hover::after {
+	opacity: 1;
+}
+
 .block:hover {
 	background: var(--metro-dark);
-	transform: scale(0.95);
+	transform: scale(0.92);
+	box-shadow: inset 0 0 20px rgba(255,255,255,0.1);
 }
 
 .block:active {
-	transform: scale(0.9);
-	background: var(--metro-black);
+	transform: scale(0.88);
 }
 
-/* Failed Block */
+/* Failed Block - Elegant */
 .block.failed {
-	background: var(--metro-light-gray);
+	background: var(--metro-light);
 	color: var(--metro-gray);
 	pointer-events: none;
 	border-color: var(--metro-white);
+	animation: failShake 0.4s ease-out;
 }
 
-/* Success Block */
+@keyframes failShake {
+	0%, 100% { transform: translateX(0); }
+	25% { transform: translateX(-4px); }
+	75% { transform: translateX(4px); }
+}
+
+/* Success Block - Magical */
 .block.success {
 	background: var(--metro-black);
 	color: var(--metro-white);
 	font-size: 3rem;
 	font-weight: 400;
 	border-color: var(--metro-white);
-	animation: metroSuccess 0.3s ease;
+	animation: successPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+	box-shadow: 0 0 30px rgba(0,0,0,0.3);
 }
 
-@keyframes metroSuccess {
-	0% { transform: scale(1); }
-	50% { transform: scale(1.1); }
-	100% { transform: scale(1); }
+@keyframes successPop {
+	0% { transform: scale(0.5) rotate(-15deg); opacity: 0; }
+	50% { transform: scale(1.15) rotate(5deg); }
+	100% { transform: scale(1) rotate(0deg); opacity: 1; }
 }
 
-/* Metro Winner Modal */
+/* Beautiful Winner Modal */
 .score {
 	display: none;
 	position: fixed;
@@ -158,93 +222,164 @@ body::before {
 	left: 50%;
 	transform: translate(-50%, -50%);
 	z-index: 99999;
-	background: var(--metro-black);
-	color: var(--metro-white);
-	padding: 50px 60px;
-	border: none;
-	min-width: 320px;
+	background: var(--metro-white);
+	color: var(--metro-black);
+	padding: 60px 80px;
+	border: 3px solid var(--metro-black);
+	box-shadow: 0 20px 80px rgba(0,0,0,0.25);
+	min-width: 400px;
 	text-align: center;
+}
+
+.score::before {
+	content: '';
+	position: absolute;
+	inset: -3px;
+	background: linear-gradient(45deg, var(--metro-black), transparent, var(--metro-black));
+	animation: borderRotate 3s linear infinite;
+	z-index: -1;
+}
+
+@keyframes borderRotate {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
 }
 
 .Winner-anim {
 	display: block;
+	animation: modalReveal 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes modalReveal {
+	0% { transform: translate(-50%, -50%) scale(0.5) rotate(-10deg); opacity: 0; }
+	100% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 1; }
 }
 
 .score > p {
-	font-size: 1rem;
+	font-size: 0.875rem;
 	font-weight: 300;
 	text-transform: lowercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.3em;
 	color: var(--metro-gray);
-	margin-bottom: 20px;
+	margin-bottom: 24px;
 }
 
 .Winner-anim > h3 {
-	font-size: 5rem;
+	font-size: 5.5rem;
 	font-weight: 300;
-	color: var(--metro-white);
-	letter-spacing: -0.02em;
+	color: var(--metro-black);
+	letter-spacing: -0.04em;
 	line-height: 1;
 	margin: 0;
+	animation: scoreCount 0.8s ease-out;
 }
 
-/* Metro Button */
+@keyframes scoreCount {
+	from { transform: scale(0.5); opacity: 0; }
+	to { transform: scale(1); opacity: 1; }
+}
+
+/* Elegant Button */
 a.noDecoration {
 	text-decoration: none;
-	background: var(--metro-white);
-	color: var(--metro-black);
-	padding: 15px 40px;
-	border: none;
-	font-weight: 400;
+	background: var(--metro-black);
+	color: var(--metro-white);
+	padding: 16px 48px;
+	border: 2px solid var(--metro-black);
+	font-weight: 300;
 	font-size: 1rem;
 	text-transform: lowercase;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.2em;
 	display: inline-block;
-	margin-top: 30px;
-	transition: all 0.2s ease;
+	margin-top: 32px;
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
+	overflow: hidden;
+}
+
+a.noDecoration::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--metro-white);
+	transform: translateX(-100%);
+	transition: transform 0.3s ease;
+}
+
+a.noDecoration:hover::before {
+	transform: translateX(0);
 }
 
 a.noDecoration:hover {
-	background: var(--metro-light-gray);
+	color: var(--metro-black);
 }
 
-a.noDecoration:active {
-	transform: scale(0.95);
+a.noDecoration span {
+	position: relative;
+	z-index: 1;
 }
 
-/* Metro Attempts Counter */
+/* Refined Attempts Counter */
 .game-area > h3 {
 	color: var(--metro-black);
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 	font-weight: 300;
-	margin: 0 0 30px;
-	padding: 0;
-	letter-spacing: 0.05em;
+	margin: 0 0 40px;
+	padding: 12px 32px;
+	letter-spacing: 0.2em;
 	text-transform: lowercase;
+	border: 1px solid var(--metro-black);
+	display: inline-block;
+	background: var(--metro-white);
+	position: relative;
 }
 
-/* Metro Stats Panel */
+.game-area > h3::before {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	left: 0;
+	right: 0;
+	height: 1px;
+	background: var(--metro-black);
+	transform: scaleX(0);
+	animation: lineGrow 1s ease-out forwards;
+}
+
+@keyframes lineGrow {
+	to { transform: scaleX(1); }
+}
+
+/* Premium Stats Panel */
 .scores {
 	position: static;
 	display: block;
 	background: var(--metro-black);
 	color: var(--metro-white);
 	border: none;
-	padding: 30px;
-	margin: 30px 0;
-	max-width: 450px;
+	padding: 40px;
+	margin: 40px 0;
+	max-width: 500px;
+	width: 100%;
+	box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+	animation: statsReveal 0.6s ease-out;
+}
+
+@keyframes statsReveal {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
 }
 
 .scores h3 {
 	color: var(--metro-white);
-	font-size: 1.5rem;
+	font-size: 1.25rem;
 	font-weight: 300;
-	margin-bottom: 25px;
+	margin-bottom: 32px;
 	text-transform: lowercase;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.3em;
 	border-bottom: 1px solid rgba(255,255,255,0.2);
-	padding-bottom: 15px;
+	padding-bottom: 20px;
+	text-align: center;
 }
 
 .scores .score-list {
@@ -252,18 +387,14 @@ a.noDecoration:active {
 	padding: 0;
 	max-height: none;
 	overflow-y: visible;
-	margin-bottom: 25px;
-}
-
-.scores .score-list::-webkit-scrollbar {
-	display: none;
+	margin-bottom: 32px;
 }
 
 .scores .score-list p {
-	padding: 15px 0;
+	padding: 16px 0;
 	margin: 0;
 	border-bottom: 1px solid rgba(255,255,255,0.1);
-	transition: all 0.2s ease;
+	transition: all 0.3s ease;
 	font-weight: 300;
 	color: var(--metro-white);
 	font-size: 1.125rem;
@@ -273,49 +404,53 @@ a.noDecoration:active {
 }
 
 .scores .score-list p b {
-	color: var(--metro-gray);
+	color: rgba(255,255,255,0.5);
 	font-weight: 300;
 	font-size: 0.875rem;
 	letter-spacing: 0.1em;
 }
 
 .scores .score-list p:hover {
-	padding-left: 10px;
+	padding-left: 16px;
+	background: rgba(255,255,255,0.05);
 }
 
-/* Metro Score Summary */
+/* Elegant Score Summary */
 .score-summary {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 15px;
-	margin-bottom: 25px;
+	gap: 16px;
+	margin-bottom: 32px;
 }
 
 .score-summary-block {
-	padding: 20px 15px;
-	background: rgba(255,255,255,0.1);
-	border: none;
+	padding: 24px 20px;
+	background: rgba(255,255,255,0.08);
+	border: 1px solid rgba(255,255,255,0.1);
 	font-size: 0.75rem;
 	font-weight: 300;
-	color: var(--metro-gray);
+	color: rgba(255,255,255,0.6);
 	text-transform: lowercase;
-	letter-spacing: 0.1em;
+	letter-spacing: 0.15em;
 	display: flex;
 	flex-direction: column;
-	gap: 8px;
-	align-items: flex-start;
-	transition: all 0.2s ease;
+	gap: 10px;
+	align-items: center;
+	text-align: center;
+	transition: all 0.3s ease;
 }
 
 .score-summary-block span {
-	font-size: 2rem;
+	font-size: 2.25rem;
 	color: var(--metro-white);
 	font-weight: 300;
 	letter-spacing: -0.02em;
 }
 
 .score-summary-block:hover {
-	background: rgba(255,255,255,0.15);
+	background: rgba(255,255,255,0.12);
+	border-color: rgba(255,255,255,0.3);
+	transform: translateY(-4px);
 }
 
 .clear-scores {
@@ -324,73 +459,93 @@ a.noDecoration:active {
 	text-decoration: none;
 	font-weight: 300;
 	text-transform: lowercase;
-	letter-spacing: 0.1em;
-	transition: all 0.2s ease;
+	letter-spacing: 0.2em;
+	transition: all 0.3s ease;
 	display: inline-block;
-	padding: 12px 25px;
+	padding: 12px 32px;
 	border: 1px solid rgba(255,255,255,0.3);
 	background: transparent;
 }
 
 .clear-scores:hover {
 	background: rgba(255,255,255,0.1);
-	border-color: rgba(255,255,255,0.5);
+	border-color: rgba(255,255,255,0.6);
+	transform: translateY(-2px);
 }
 
-/* Metro Landing Page */
+/* Magical Landing Page */
 .wrapper {
 	position: fixed;
 	z-index: 999999;
 	inset: 0;
 	background: var(--metro-white);
 	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
+	align-items: center;
+	justify-content: center;
 	padding: 60px 30px;
 	overflow-y: auto;
+	animation: wrapperReveal 0.8s ease-out;
+}
+
+@keyframes wrapperReveal {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
 .wrapper-content {
-	text-align: left;
+	text-align: center;
 	position: relative;
 	z-index: 1;
-	max-width: 600px;
+	max-width: 700px;
 	padding: 0;
 	width: 100%;
 }
 
 .wrapper-title {
 	color: var(--metro-black);
-	font-size: 4rem;
+	font-size: 5.5rem;
 	font-weight: 300;
-	letter-spacing: -0.02em;
+	letter-spacing: -0.03em;
 	text-transform: lowercase;
-	margin-bottom: 20px;
+	margin-bottom: 32px;
 	line-height: 0.9;
 	position: relative;
 	display: block;
+	animation: titleDrop 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@keyframes titleDrop {
+	from { transform: translateY(-40px); opacity: 0; }
+	to { transform: translateY(0); opacity: 1; }
 }
 
 .wrapper-content > center {
-	text-align: left;
+	text-align: center;
 }
 
 .wrapper-content > center > p {
-	color: var(--metro-black);
+	color: var(--metro-gray);
 	font-size: 1.125rem;
-	max-width: 480px;
-	margin: 0 0 50px;
-	line-height: 1.6;
+	max-width: 520px;
+	margin: 0 auto 64px;
+	line-height: 1.8;
 	font-weight: 300;
-	letter-spacing: 0.01em;
+	letter-spacing: 0.02em;
+	animation: descReveal 1s ease-out 0.2s backwards;
+}
+
+@keyframes descReveal {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
 }
 
 .intro-data {
-	margin: 50px 0 40px;
+	margin: 64px auto 48px;
 	cursor: pointer;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	gap: 15px;
+	gap: 20px;
+	max-width: 600px;
 }
 
 .wrapper img.screenshots {
@@ -398,14 +553,26 @@ a.noDecoration:active {
 	height: auto;
 	aspect-ratio: 1;
 	object-fit: cover;
-	border: none;
-	transition: all 0.2s ease;
+	border: 2px solid var(--metro-black);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	filter: grayscale(100%) contrast(1.1);
+	animation: imgFloat 1s ease-out backwards;
+}
+
+.wrapper img.screenshots:nth-child(1) { animation-delay: 0.3s; }
+.wrapper img.screenshots:nth-child(2) { animation-delay: 0.4s; }
+.wrapper img.screenshots:nth-child(3) { animation-delay: 0.5s; }
+
+@keyframes imgFloat {
+	from { opacity: 0; transform: translateY(30px); }
+	to { opacity: 1; transform: translateY(0); }
 }
 
 .wrapper img.screenshots:hover {
-	transform: scale(0.95);
-	opacity: 0.8;
+	transform: translateY(-8px) scale(1.02);
+	box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+	border-color: var(--metro-black);
+	filter: grayscale(0%) contrast(1);
 }
 
 .start-game {
@@ -415,23 +582,44 @@ a.noDecoration:active {
 	background: var(--metro-black);
 	font-weight: 300;
 	text-transform: lowercase;
-	letter-spacing: 0.08em;
+	letter-spacing: 0.2em;
 	display: inline-flex;
 	align-items: center;
-	gap: 15px;
-	padding: 18px 45px;
-	border: none;
-	transition: all 0.2s ease;
+	gap: 16px;
+	padding: 20px 56px;
+	border: 2px solid var(--metro-black);
+	transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 	position: relative;
 	overflow: hidden;
+	animation: btnReveal 1s ease-out 0.6s backwards;
+}
+
+@keyframes btnReveal {
+	from { opacity: 0; transform: translateY(20px); }
+	to { opacity: 1; transform: translateY(0); }
+}
+
+.start-game::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	background: var(--metro-white);
+	transform: translateX(-100%);
+	transition: transform 0.3s ease;
+}
+
+.start-game:hover::before {
+	transform: translateX(0);
 }
 
 .start-game:hover {
-	background: var(--metro-dark);
+	color: var(--metro-black);
+	transform: translateY(-4px);
+	box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
 .start-game:active {
-	transform: scale(0.95);
+	transform: translateY(-2px);
 }
 
 .start-game span,
@@ -442,29 +630,36 @@ a.noDecoration:active {
 
 .start-button {
 	font-size: 1rem;
+	transition: transform 0.3s ease;
+}
+
+.start-game:hover .start-button {
+	transform: translateX(6px);
 }
 
 .hide-me {
 	display: none !important;
 }
 
-/* Responsive Metro */
+/* Responsive Magic */
 @media (max-width: 768px) {
 	.App-header {
-		padding: 15px 20px;
+		padding: 20px 24px;
 	}
 
 	.App-header h1 {
-		font-size: 1.25rem;
+		font-size: 1.5rem;
+		letter-spacing: 0.2em;
 	}
 
 	.game-area {
-		padding: 30px 20px;
+		margin: 40px auto;
+		padding: 0 20px;
 	}
 
 	.board {
 		max-width: 100%;
-		gap: 0;
+		border-width: 3px;
 	}
 
 	.block {
@@ -477,71 +672,58 @@ a.noDecoration:active {
 	}
 
 	.wrapper-title {
-		font-size: 3rem;
+		font-size: 3.5rem;
 	}
 
 	.intro-data {
-		gap: 10px;
+		gap: 12px;
+		max-width: 100%;
 	}
 
 	.start-game {
 		font-size: 1rem;
-		padding: 15px 35px;
+		padding: 16px 40px;
 	}
 
 	.score {
-		padding: 40px 50px;
-		min-width: 280px;
+		padding: 48px 56px;
+		min-width: 320px;
 	}
 
 	.Winner-anim > h3 {
-		font-size: 4rem;
+		font-size: 4.5rem;
 	}
 
 	.scores {
-		padding: 25px 20px;
-		margin: 20px 0;
+		padding: 32px 24px;
+		margin: 32px 0;
 	}
 }
 
 @media (max-width: 480px) {
 	.board {
-		border-width: 0;
-	}
-
-	.block {
-		font-size: 1.5rem;
 		border-width: 2px;
 	}
 
+	.block {
+		font-size: 1.6rem;
+		border-width: 1px;
+	}
+
 	.wrapper-title {
-		font-size: 2.5rem;
+		font-size: 2.75rem;
 	}
 
 	.scores {
-		padding: 20px 15px;
+		padding: 24px 20px;
 	}
 
 	.score-summary {
-		gap: 10px;
-	}
-
-	.score-summary-block {
-		padding: 15px 12px;
+		gap: 12px;
 	}
 }
 
-/* Metro Accent Line */
-.metro-accent {
-	position: absolute;
-	width: 4px;
-	height: 100%;
-	background: var(--metro-black);
-	left: 0;
-	top: 0;
-}
-
-/* Loading State Fix */
+/* Loading State */
 body.loading .App {
 	opacity: 0;
 }
